@@ -2,16 +2,135 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Google Tag Gateway Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTG Test Environment | Chris Beardsley</title>
+    
+    <!-- 1. Google Fonts Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
+    <style>
+        :root {
+            --primary: #005a9c; /* Akamai Blue */
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --accent: #38bdf8;
+        }
+        
+        /* 2. Apply the Font */
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            line-height: 1.6; 
+            color: var(--text); 
+            background: var(--bg); 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        header { 
+            background: white; 
+            border-bottom: 1px solid #e2e8f0; 
+            padding: 1.5rem 0; 
+            text-align: center; 
+        }
+        
+        header strong { color: var(--primary); letter-spacing: 1px; }
+
+        .container { 
+            max-width: 700px; 
+            margin: 4rem auto; 
+            padding: 3rem; 
+            background: white; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); 
+        }
+
+        h1 { font-weight: 800; font-size: 2.25rem; color: #0f172a; margin-top: 0; letter-spacing: -0.025em; }
+        
+        .status-card { 
+            background: #f1f5f9; 
+            border-radius: 8px; 
+            padding: 1.25rem; 
+            margin: 2rem 0; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge { 
+            background: #22c55e; 
+            color: white; 
+            padding: 0.25rem 0.75rem; 
+            border-radius: 9999px; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+        }
+
+        code { font-family: 'Courier New', monospace; color: var(--primary); background: #dbeafe; padding: 0.2rem 0.4rem; border-radius: 4px; }
+
+        .demo-step { display: flex; align-items: flex-start; margin-bottom: 1.5rem; }
+        .step-num { 
+            background: var(--primary); 
+            color: white; 
+            width: 28px; 
+            height: 28px; 
+            border-radius: 50%; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem; 
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        footer { text-align: center; margin-top: 4rem; color: #94a3b8; font-size: 0.875rem; }
+    </style>
 </head>
 <body>
-    <div style="font-family: sans-serif; text-align: center; padding: 50px;">
-        <h1>🚀 GitHub Pages Origin Active</h1>
-        <p>This page is successfully being served from GitHub.</p>
-        <p>If you see this at <b>chrisbeardsley.uk</b>, Akamai is correctly proxying your traffic.</p>
-        <hr>
-        <p><small>Check the Network Tab in DevTools to see the Tag Gateway in action.</small></p>
+
+<header>
+    <strong>CHRIS BEARDSLEY</strong> | CONFIG V2.0
+</header>
+
+<div class="container">
+    <h1>Google Tag Gateway Test</h1>
+    <p>This page is a live origin environment for testing first-party data collection through Akamai.</p>
+
+    <div class="status-card">
+        <div>
+            <strong>Gateway Status:</strong> <code id="path-label">/gtg123/</code>
+        </div>
+        <span class="badge">Active</span>
     </div>
+
+    <div class="demo-step">
+        <div class="step-num">1</div>
+        <div><strong>Origin Hosting:</strong> Static files served from GitHub Pages.</div>
+    </div>
+    
+    <div class="demo-step">
+        <div class="step-num">2</div>
+        <div><strong>Edge Delivery:</strong> Global caching via Akamai Ion.</div>
+    </div>
+    
+    <div class="demo-step">
+        <div class="step-num">3</div>
+        <div><strong>GTG Injection:</strong> Google Tags proxied through <code>chrisbeardsley.uk</code>.</div>
+    </div>
+
+    <div style="margin-top: 3rem; text-align: center;">
+        <p><small>Site URL: <span id="current-url" style="color: #64748b;"></span></small></p>
+    </div>
+</div>
+
+<footer>
+    &copy; 2024 Technical Demo &bull; First-Party Data Strategy
+</footer>
+
+<script>
+    document.getElementById('current-url').innerText = window.location.host;
+</script>
+
 </body>
 </html>
