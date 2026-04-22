@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTG Playground | Chris Beardsley</title>
+    <title>Data Privacy Lab | GTG Playground</title>
     
-    <!-- Google Fonts -->
+    <!-- 1. Google Fonts Import (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-    <!-- Consolidated Google Tag (gtag.js) via Akamai GTG -->
+    <!-- 2. Consolidated Google Tag (gtag.js) via Akamai GTG -->
     <script async src="/gtg123/gtag/js?id=G-QDK2WX7MJ1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      // Consolidated Configurations
+      // Base Configurations (No conversion here, just setup)
       gtag('config', 'G-QDK2WX7MJ1');
       gtag('config', 'AW-17153099825');
       gtag('config', 'G-F0S70EKR51');
@@ -69,7 +69,7 @@
             text-align: center;
         }
 
-        h1 { font-weight: 800; font-size: 2.5rem; color: #0f172a; margin-bottom: 1rem; letter-spacing: -0.03em; }
+        h1 { font-weight: 800; font-size: 2.5rem; color: #0f172a; margin-bottom: 0.5rem; letter-spacing: -0.03em; }
         p { font-size: 1.1rem; color: #64748b; margin-bottom: 2rem; }
         
         .playground-status { 
@@ -105,12 +105,30 @@
             border: 1px solid #f1f5f9;
             border-radius: 8px;
             padding: 1.5rem;
-            margin-top: 2rem;
+            margin-top: 1rem;
         }
 
-        .config-box h3 { margin-top: 0; font-size: 1rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+        .config-box h3 { margin-top: 0; font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; }
 
         code { font-family: 'Courier New', monospace; color: var(--primary); font-weight: 600; }
+
+        .demo-btn {
+            margin-top: 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-btn:hover { background: #004a80; transform: translateY(-1px); }
+        .demo-btn:active { transform: translateY(0); }
 
         footer { 
             padding: 2rem;
@@ -130,33 +148,51 @@
     <div class="container">
         <div class="playground-status">
             <div class="pulse"></div>
-            GTG Playground Active
+            First-Party Gateway Active
         </div>
         
-        <h1>Testing ground</h1>
-        <p>A testing environment for first-party data collection, server-side routing, and edge-injected analytics.</p>
+        <h1>Data Privacy Lab</h1>
+        <p>Advanced testing for First-Party data stream consolidation via Akamai Edge.</p>
 
         <div class="config-box">
-            <h3>Active Configurations</h3>
-            <div style="display: grid; gap: 10px; font-size: 0.9rem;">
+            <h3>Active Tracking IDs</h3>
+            <div style="display: grid; gap: 8px; font-size: 0.85rem;">
                 <div>• GA4 Property: <code>G-QDK2WX7MJ1</code></div>
                 <div>• Google Ads: <code>AW-17153099825</code></div>
                 <div>• Secondary GA4: <code>G-F0S70EKR51</code></div>
-                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee;">
-                    • Routing via: <code>/gtg123/</code>
+                <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee; color: #64748b;">
+                    Endpoint: <code>chrisbeardsley.uk/gtg123/</code>
                 </div>
             </div>
         </div>
+
+        <button id="conversion-trigger" class="demo-btn">🔥 Trigger Conversion Event</button>
     </div>
 </main>
 
 <footer>
-    &copy; <span id="year"></span> &bull; First-Party Strategy Playground &bull; <span id="current-host"></span>
+    &copy; <span id="year"></span> &bull; Technical Demo &bull; <span id="current-host"></span>
 </footer>
 
 <script>
     document.getElementById('year').innerText = new Date().getFullYear();
     document.getElementById('current-host').innerText = window.location.hostname;
+
+    // Manual Event Trigger (The conversion ONLY happens when this button is clicked)
+    document.getElementById('conversion-trigger').addEventListener('click', function() {
+        // Generate a random test transaction ID
+        const tid = 'TID_' + Math.floor(Math.random() * 1000000);
+        
+        gtag('event', 'conversion', {
+            'send_to': 'AW-17153099825/8rVACOaXrKAcELGQnvM_',
+            'value': 1.0,
+            'currency': 'USD',
+            'transaction_id': tid
+        });
+        
+        console.log('Conversion Event Sent with ID:', tid);
+        alert('Conversion event fired via Akamai! Transaction ID: ' + tid);
+    });
 </script>
 
 </body>
