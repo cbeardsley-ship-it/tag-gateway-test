@@ -3,133 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTG Test Environment | Chris Beardsley</title>
+    <title>GTG Playground | Chris Beardsley</title>
     
-    <!-- 1. Google Fonts Import -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
+    <!-- Consolidated Google Tag (gtag.js) via Akamai GTG -->
+    <script async src="/gtg123/gtag/js?id=G-QDK2WX7MJ1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // Consolidated Configurations
+      gtag('config', 'G-QDK2WX7MJ1');
+      gtag('config', 'AW-17153099825');
+      gtag('config', 'G-F0S70EKR51');
+    </script>
+
     <style>
         :root {
-            --primary: #005a9c; /* Akamai Blue */
+            --primary: #005a9c;
             --bg: #f8fafc;
             --text: #1e293b;
-            --accent: #38bdf8;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
         
-        /* 2. Apply the Font */
         body { 
             font-family: 'Inter', -apple-system, sans-serif; 
             line-height: 1.6; 
             color: var(--text); 
             background: var(--bg); 
             margin: 0; 
-            padding: 0; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         
         header { 
             background: white; 
             border-bottom: 1px solid #e2e8f0; 
-            padding: 1.5rem 0; 
+            padding: 1.25rem 0; 
             text-align: center; 
         }
         
-        header strong { color: var(--primary); letter-spacing: 1px; }
+        header strong { color: var(--primary); letter-spacing: 1px; font-weight: 800; }
 
-        .container { 
-            max-width: 700px; 
-            margin: 4rem auto; 
-            padding: 3rem; 
-            background: white; 
-            border-radius: 12px; 
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); 
-        }
-
-        h1 { font-weight: 800; font-size: 2.25rem; color: #0f172a; margin-top: 0; letter-spacing: -0.025em; }
-        
-        .status-card { 
-            background: #f1f5f9; 
-            border-radius: 8px; 
-            padding: 1.25rem; 
-            margin: 2rem 0; 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .badge { 
-            background: #22c55e; 
-            color: white; 
-            padding: 0.25rem 0.75rem; 
-            border-radius: 9999px; 
-            font-size: 0.75rem; 
-            font-weight: 700; 
-        }
-
-        code { font-family: 'Courier New', monospace; color: var(--primary); background: #dbeafe; padding: 0.2rem 0.4rem; border-radius: 4px; }
-
-        .demo-step { display: flex; align-items: flex-start; margin-bottom: 1.5rem; }
-        .step-num { 
-            background: var(--primary); 
-            color: white; 
-            width: 28px; 
-            height: 28px; 
-            border-radius: 50%; 
+        .hero {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem; 
-            font-weight: 600;
-            font-size: 0.9rem;
+            padding: 2rem;
         }
 
-        footer { text-align: center; margin-top: 4rem; color: #94a3b8; font-size: 0.875rem; }
+        .container { 
+            max-width: 650px; 
+            width: 100%;
+            padding: 3rem; 
+            background: white; 
+            border-radius: 16px; 
+            box-shadow: var(--card-shadow); 
+            text-align: center;
+        }
+
+        h1 { font-weight: 800; font-size: 2.5rem; color: #0f172a; margin-bottom: 1rem; letter-spacing: -0.03em; }
+        p { font-size: 1.1rem; color: #64748b; margin-bottom: 2rem; }
+        
+        .playground-status { 
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9; 
+            border-radius: 99px; 
+            padding: 0.5rem 1.25rem; 
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        .config-box {
+            text-align: left;
+            background: #fafafa;
+            border: 1px solid #f1f5f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .config-box h3 { margin-top: 0; font-size: 1rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        code { font-family: 'Courier New', monospace; color: var(--primary); font-weight: 600; }
+
+        footer { 
+            padding: 2rem;
+            color: #94a3b8; 
+            font-size: 0.875rem; 
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <strong>CHRIS BEARDSLEY</strong> | CONFIG V2.0
+    <strong>CHRIS BEARDSLEY</strong>
 </header>
 
-<div class="container">
-    <h1>Google Tag Gateway Test</h1>
-    <p>This page is a live origin environment for testing first-party data collection through Akamai.</p>
-
-    <div class="status-card">
-        <div>
-            <strong>Gateway Status:</strong> <code id="path-label">/gtg123/</code>
+<main class="hero">
+    <div class="container">
+        <div class="playground-status">
+            <div class="pulse"></div>
+            GTG Playground Active
         </div>
-        <span class="badge">Active</span>
-    </div>
+        
+        <h1>Testing ground</h1>
+        <p>A testing environment for first-party data collection, server-side routing, and edge-injected analytics.</p>
 
-    <div class="demo-step">
-        <div class="step-num">1</div>
-        <div><strong>Origin Hosting:</strong> Static files served from GitHub Pages.</div>
+        <div class="config-box">
+            <h3>Active Configurations</h3>
+            <div style="display: grid; gap: 10px; font-size: 0.9rem;">
+                <div>• GA4 Property: <code>G-QDK2WX7MJ1</code></div>
+                <div>• Google Ads: <code>AW-17153099825</code></div>
+                <div>• Secondary GA4: <code>G-F0S70EKR51</code></div>
+                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee;">
+                    • Routing via: <code>/gtg123/</code>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div class="demo-step">
-        <div class="step-num">2</div>
-        <div><strong>Edge Delivery:</strong> Global caching via Akamai Ion.</div>
-    </div>
-    
-    <div class="demo-step">
-        <div class="step-num">3</div>
-        <div><strong>GTG Injection:</strong> Google Tags proxied through <code>chrisbeardsley.uk</code>.</div>
-    </div>
-
-    <div style="margin-top: 3rem; text-align: center;">
-        <p><small>Site URL: <span id="current-url" style="color: #64748b;"></span></small></p>
-    </div>
-</div>
+</main>
 
 <footer>
-    &copy; Technical Demo &bull; First-Party Data Strategy
+    &copy; <span id="year"></span> &bull; First-Party Strategy Playground &bull; <span id="current-host"></span>
 </footer>
 
 <script>
-    document.getElementById('current-url').innerText = window.location.host;
+    document.getElementById('year').innerText = new Date().getFullYear();
+    document.getElementById('current-host').innerText = window.location.hostname;
 </script>
 
 </body>
