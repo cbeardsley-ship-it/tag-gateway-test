@@ -35,7 +35,10 @@
       gtag('config', 'G-F0S70EKR51');
 
       // New Tag ID: DC-16848889
-      gtag('config', 'DC-16848889');
+      // Added 'allow_ad_personalization_signals': false to test tag-specific config
+      gtag('config', 'DC-16848889', {
+        'allow_ad_personalization_signals': false
+      });
     </script>
 
     <style>
