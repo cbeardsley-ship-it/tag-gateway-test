@@ -17,10 +17,25 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      // Base Configurations (No conversion here, just setup)
-      gtag('config', 'G-QDK2WX7MJ1');
-      gtag('config', 'AW-17153099825');
+      // Helper to generate a random ID for the demo
+      var randomUID = 'UID_' + Math.floor(Math.random() * 1000000);
+
+      // --- Tag-Specific Configurations ---
+
+      // Primary GA4
+      gtag('config', 'G-QDK2WX7MJ1', { 'debug_mode': true });
+
+      // Google Ads: Enhanced with a Random User ID for this session
+      gtag('config', 'AW-17153099825', {
+          'user_id': randomUID,
+          'allow_enhanced_conversions': true
+      });
+
+      // Secondary GA4
       gtag('config', 'G-F0S70EKR51');
+
+      // New Tag ID: DC-16848889
+      gtag('config', 'DC-16848889');
     </script>
 
     <style>
@@ -74,21 +89,14 @@
         
         .playground-status { 
             display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #f1f5f9; 
-            border-radius: 99px; 
-            padding: 0.5rem 1.25rem; 
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            font-weight: 600;
+            align-items: center; gap: 8px;
+            background: #f1f5f9; border-radius: 99px; 
+            padding: 0.5rem 1.25rem; margin-bottom: 2rem;
+            font-size: 0.9rem; font-weight: 600;
         }
 
         .pulse {
-            width: 8px;
-            height: 8px;
-            background: #22c55e;
-            border-radius: 50%;
+            width: 8px; height: 8px; background: #22c55e; border-radius: 50%;
             box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
             animation: pulse 2s infinite;
         }
@@ -101,41 +109,30 @@
 
         .config-box {
             text-align: left;
-            background: #fafafa;
-            border: 1px solid #f1f5f9;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 1rem;
+            background: #fafafa; border: 1px solid #f1f5f9;
+            border-radius: 8px; padding: 1.5rem; margin-top: 1rem;
         }
 
         .config-box h3 { margin-top: 0; font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; }
 
+        .param-badge {
+            background: #e2e8f0; font-size: 10px; padding: 2px 6px;
+            border-radius: 4px; margin-left: 5px; color: #475569;
+        }
+
         code { font-family: 'Courier New', monospace; color: var(--primary); font-weight: 600; }
 
         .demo-btn {
-            margin-top: 2rem;
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 1rem;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem; background: var(--primary); color: white;
+            border: none; width: 100%; padding: 1rem; border-radius: 8px;
+            font-weight: 700; font-size: 1rem; cursor: pointer;
+            transition: all 0.2s; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .demo-btn:hover { background: #004a80; transform: translateY(-1px); }
         .demo-btn:active { transform: translateY(0); }
 
-        footer { 
-            padding: 2rem;
-            color: #94a3b8; 
-            font-size: 0.875rem; 
-            text-align: center;
-        }
+        footer { padding: 2rem; color: #94a3b8; font-size: 0.875rem; text-align: center; }
     </style>
 </head>
 <body>
@@ -158,15 +155,16 @@
             <h3>Active Tracking IDs</h3>
             <div style="display: grid; gap: 8px; font-size: 0.85rem;">
                 <div>• GA4 Property: <code>G-QDK2WX7MJ1</code></div>
-                <div>• Google Ads: <code>AW-17153099825</code></div>
+                <div>• Google Ads: <code>AW-17153099825</code> <span class="param-badge" id="uid-display"></span></div>
                 <div>• Secondary GA4: <code>G-F0S70EKR51</code></div>
+                <div>• New Tag: <code>DC-16848889</code></div>
                 <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee; color: #64748b;">
-                    Endpoint: <code>chrisbeardsley.uk/gtg123/</code>
+                    FPS Gateway Endpoint: <code>/gtg123/</code>
                 </div>
             </div>
         </div>
 
-        <button id="conversion-trigger" class="demo-btn">Trigger Conversion Event</button>
+        <button id="conversion-trigger" class="demo-btn">🔥 Trigger Conversion Event</button>
     </div>
 </main>
 
@@ -177,21 +175,20 @@
 <script>
     document.getElementById('year').innerText = new Date().getFullYear();
     document.getElementById('current-host').innerText = window.location.hostname;
+    
+    // Display the generated User ID in the UI for the demo
+    document.getElementById('uid-display').innerText = 'user_id: ' + randomUID;
 
-    // Manual Event Trigger (The conversion ONLY happens when this button is clicked)
+    // Manual Event Trigger
     document.getElementById('conversion-trigger').addEventListener('click', function() {
-        // Generate a random test transaction ID
         const tid = 'TID_' + Math.floor(Math.random() * 1000000);
-        
         gtag('event', 'conversion', {
             'send_to': 'AW-17153099825/8rVACOaXrKAcELGQnvM_',
             'value': 1.0,
             'currency': 'USD',
             'transaction_id': tid
         });
-        
-        console.log('Conversion Event Sent with ID:', tid);
-        alert('Conversion event fired via Akamai! Transaction ID: ' + tid);
+        alert('Event fired via Akamai!\nTransaction ID: ' + tid + '\nUser ID: ' + randomUID);
     });
 </script>
 
