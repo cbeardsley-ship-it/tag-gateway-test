@@ -17,28 +17,25 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      // Helper to generate a random ID for the demo
+      // Generate random ID for this session
       var randomUID = 'UID_' + Math.floor(Math.random() * 1000000);
 
       // --- Tag-Specific Configurations ---
 
-      // Primary GA4
+      // Primary GA4: Debug mode active
       gtag('config', 'G-QDK2WX7MJ1', { 'debug_mode': true });
 
-      // Google Ads: Enhanced with a Random User ID for this session
+      // Google Ads: Unique User ID and Personalization turned OFF
       gtag('config', 'AW-17153099825', {
           'user_id': randomUID,
-          'allow_enhanced_conversions': true
+          'allow_ad_personalization_signals': false
       });
 
       // Secondary GA4
       gtag('config', 'G-F0S70EKR51');
 
-      // New Tag ID: DC-16848889
-      // Added 'allow_ad_personalization_signals': false to test tag-specific config
-      gtag('config', 'DC-16848889', {
-        'allow_ad_personalization_signals': false
-      });
+      // Floodlight / DoubleClick Tag
+      gtag('config', 'DC-16848889');
     </script>
 
     <style>
@@ -160,7 +157,7 @@
                 <div>• GA4 Property: <code>G-QDK2WX7MJ1</code></div>
                 <div>• Google Ads: <code>AW-17153099825</code> <span class="param-badge" id="uid-display"></span></div>
                 <div>• Secondary GA4: <code>G-F0S70EKR51</code></div>
-                <div>• New Tag: <code>DC-16848889</code></div>
+                <div>• Floodlight: <code>DC-16848889</code></div>
                 <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee; color: #64748b;">
                     FPS Gateway Endpoint: <code>/gtg123/</code>
                 </div>
@@ -178,9 +175,25 @@
 <script>
     document.getElementById('year').innerText = new Date().getFullYear();
     document.getElementById('current-host').innerText = window.location.hostname;
-    
-    // Display the generated User ID in the UI for the demo
     document.getElementById('uid-display').innerText = 'user_id: ' + randomUID;
+
+    // --- CONSOLE DEBUG HELPER ---
+    // Type checkConfig() in your browser console to see the active settings
+    window.checkConfig = function() {
+        console.log("%c--- GTG Config Check ---", "color: #005a9c; font-weight: bold; font-size: 14px;");
+        
+        const tags = ['G-QDK2WX7MJ1', 'AW-17153099825', 'G-F0S70EKR51', 'DC-16848889'];
+        
+        tags.forEach(id => {
+            gtag('get', id, 'user_id', (val) => {
+                console.log(`%c${id} %cuser_id: %c${val || 'Not Set'}`, "font-weight:bold", "color:black", "color:blue; font-weight:bold");
+            });
+            gtag('get', id, 'allow_ad_personalization_signals', (val) => {
+                if(val !== undefined) console.log(`%c${id} %cad_personalization: %c${val}`, "font-weight:bold", "color:black", "color:red; font-weight:bold");
+            });
+        });
+        return "Checking live tag values...";
+    };
 
     // Manual Event Trigger
     document.getElementById('conversion-trigger').addEventListener('click', function() {
