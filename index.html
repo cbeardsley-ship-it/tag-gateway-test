@@ -10,32 +10,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-    <!-- 2. Consolidated Google Tag (gtag.js) via Akamai GTG -->
+    <!-- 2. PROXIED SNIPPET: Consolidated via Akamai Gateway (/gtg123/) -->
     <script async src="/gtg123/gtag/js?id=G-QDK2WX7MJ1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      // Generate random ID for this session
       var randomUID = 'UID_' + Math.floor(Math.random() * 1000000);
 
-      // --- Tag-Specific Configurations ---
-
-      // Primary GA4: Debug mode active
+      // First-Party Configurations
       gtag('config', 'G-QDK2WX7MJ1', { 'debug_mode': true });
-
-      // Google Ads: Unique User ID and Personalization turned OFF
       gtag('config', 'AW-17153099825', {
           'user_id': randomUID,
           'allow_ad_personalization_signals': false
       });
-
-      // Secondary GA4
-      gtag('config', 'G-F0S70EKR51');
-
-      // Floodlight / DoubleClick Tag
+      gtag('config', 'G-F0S70EKR51', { 'debug_mode': true });
       gtag('config', 'DC-16848889');
+    </script>
+
+    <!-- 3. STANDARD SNIPPET: Standard Third-Party Load -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQ6V2VWKL2"></script>
+    <script>
+      gtag('config', 'G-MQ6V2VWKL2');
     </script>
 
     <style>
@@ -43,53 +40,34 @@
             --primary: #005a9c;
             --bg: #f8fafc;
             --text: #1e293b;
-            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
         
         body { 
             font-family: 'Inter', -apple-system, sans-serif; 
-            line-height: 1.6; 
-            color: var(--text); 
-            background: var(--bg); 
-            margin: 0; 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            line-height: 1.6; color: var(--text); background: var(--bg); 
+            margin: 0; display: flex; flex-direction: column; min-height: 100vh;
         }
         
         header { 
-            background: white; 
-            border-bottom: 1px solid #e2e8f0; 
-            padding: 1.25rem 0; 
-            text-align: center; 
+            background: white; border-bottom: 1px solid #e2e8f0; 
+            padding: 1.25rem 0; text-align: center; 
         }
         
         header strong { color: var(--primary); letter-spacing: 1px; font-weight: 800; }
 
-        .hero {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
+        .hero { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
 
         .container { 
-            max-width: 650px; 
-            width: 100%;
-            padding: 3rem; 
-            background: white; 
-            border-radius: 16px; 
-            box-shadow: var(--card-shadow); 
-            text-align: center;
+            max-width: 650px; width: 100%; padding: 3rem; 
+            background: white; border-radius: 16px; box-shadow: var(--card-shadow); text-align: center;
         }
 
-        h1 { font-weight: 800; font-size: 2.5rem; color: #0f172a; margin-bottom: 0.5rem; letter-spacing: -0.03em; }
+        h1 { font-weight: 800; font-size: 2.2rem; color: #0f172a; margin-bottom: 0.5rem; letter-spacing: -0.03em; }
         p { font-size: 1.1rem; color: #64748b; margin-bottom: 2rem; }
         
         .playground-status { 
-            display: inline-flex;
-            align-items: center; gap: 8px;
+            display: inline-flex; align-items: center; gap: 8px;
             background: #f1f5f9; border-radius: 99px; 
             padding: 0.5rem 1.25rem; margin-bottom: 2rem;
             font-size: 0.9rem; font-weight: 600;
@@ -104,21 +82,19 @@
         @keyframes pulse {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
         }
 
         .config-box {
-            text-align: left;
-            background: #fafafa; border: 1px solid #f1f5f9;
+            text-align: left; background: #fafafa; border: 1px solid #f1f5f9;
             border-radius: 8px; padding: 1.5rem; margin-top: 1rem;
         }
 
         .config-box h3 { margin-top: 0; font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.1em; }
 
-        .param-badge {
-            background: #e2e8f0; font-size: 10px; padding: 2px 6px;
-            border-radius: 4px; margin-left: 5px; color: #475569;
-        }
+        .route-label { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; margin-left: 8px; text-transform: uppercase;}
+        .first-party { background: #dcfce7; color: #166534; }
+        .third-party { background: #fee2e2; color: #991b1b; }
 
         code { font-family: 'Courier New', monospace; color: var(--primary); font-weight: 600; }
 
@@ -130,7 +106,6 @@
         }
 
         .demo-btn:hover { background: #004a80; transform: translateY(-1px); }
-        .demo-btn:active { transform: translateY(0); }
 
         footer { padding: 2rem; color: #94a3b8; font-size: 0.875rem; text-align: center; }
     </style>
@@ -145,66 +120,73 @@
     <div class="container">
         <div class="playground-status">
             <div class="pulse"></div>
-            First-Party Gateway Active
+            GTG Playground
         </div>
         
-        <h1>GTG Playground</h1>
-        <p>Advanced testing for First-Party data stream consolidation via Akamai Edge.</p>
+        <h1>Google Tag Gateway</h1>
+        <p>Testing First-Party purchase events across multiple Google properties.</p>
 
         <div class="config-box">
-            <h3>Active Tracking IDs</h3>
-            <div style="display: grid; gap: 8px; font-size: 0.85rem;">
-                <div>• GA4 Property: <code>G-QDK2WX7MJ1</code></div>
-                <div>• Google Ads: <code>AW-17153099825</code> <span class="param-badge" id="uid-display"></span></div>
-                <div>• Secondary GA4: <code>G-F0S70EKR51</code></div>
-                <div>• Floodlight: <code>DC-16848889</code></div>
-                <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee; color: #64748b;">
-                    FPS Gateway Endpoint: <code>/gtg123/</code>
+            <h3>Active Purchase Targets</h3>
+            <div style="display: grid; gap: 10px; font-size: 0.85rem;">
+                <div>• Primary GA4: <code>G-QDK2WX7MJ1</code> <span class="route-label first-party">1st Party</span></div>
+                <div>• Secondary GA4: <code>G-F0S70EKR51</code> <span class="route-label first-party">1st Party</span></div>
+                <div>• Google Ads: <code>AW-17153099825</code> <span class="route-label first-party">1st Party</span></div>
+                <div style="border-top: 1px solid #eee; padding-top: 10px; color: #94a3b8;">
+                    • Control (3P): <code>G-MQ6V2VWKL2</code> <span class="route-label third-party">Standard</span>
                 </div>
             </div>
         </div>
 
-        <button id="conversion-trigger" class="demo-btn">🔥 Trigger Conversion Event</button>
+        <button id="purchase-trigger" class="demo-btn">🛒 Trigger Purchase Event (All Tags)</button>
     </div>
 </main>
 
 <footer>
-    &copy; <span id="year"></span> &bull; Technical Demo &bull; <span id="current-host"></span>
+    &copy; <span id="year"></span> &bull; First-Party Strategy Demo &bull; <span id="current-host"></span>
 </footer>
 
 <script>
     document.getElementById('year').innerText = new Date().getFullYear();
     document.getElementById('current-host').innerText = window.location.hostname;
-    document.getElementById('uid-display').innerText = 'user_id: ' + randomUID;
 
-    // --- CONSOLE DEBUG HELPER ---
-    // Type checkConfig() in your browser console to see the active settings
-    window.checkConfig = function() {
-        console.log("%c--- GTG Config Check ---", "color: #005a9c; font-weight: bold; font-size: 14px;");
-        
-        const tags = ['G-QDK2WX7MJ1', 'AW-17153099825', 'G-F0S70EKR51', 'DC-16848889'];
-        
-        tags.forEach(id => {
-            gtag('get', id, 'user_id', (val) => {
-                console.log(`%c${id} %cuser_id: %c${val || 'Not Set'}`, "font-weight:bold", "color:black", "color:blue; font-weight:bold");
-            });
-            gtag('get', id, 'allow_ad_personalization_signals', (val) => {
-                if(val !== undefined) console.log(`%c${id} %cad_personalization: %c${val}`, "font-weight:bold", "color:black", "color:red; font-weight:bold");
-            });
-        });
-        return "Checking live tag values...";
-    };
-
-    // Manual Event Trigger
-    document.getElementById('conversion-trigger').addEventListener('click', function() {
+    // Manual Purchase Trigger for Demo
+    document.getElementById('purchase-trigger').addEventListener('click', function() {
         const tid = 'TID_' + Math.floor(Math.random() * 1000000);
+        
+        // 1. Send Conversion to Google Ads (First-Party)
         gtag('event', 'conversion', {
             'send_to': 'AW-17153099825/8rVACOaXrKAcELGQnvM_',
             'value': 1.0,
             'currency': 'USD',
             'transaction_id': tid
         });
-        alert('Event fired via Akamai!\nTransaction ID: ' + tid + '\nUser ID: ' + randomUID);
+
+        // 2. Send Purchase to Primary GA4 (First-Party)
+        gtag('event', 'purchase', {
+            'send_to': 'G-QDK2WX7MJ1',
+            'value': 150.00,
+            'currency': 'USD',
+            'transaction_id': tid
+        });
+
+        // 3. Send Purchase to Secondary GA4 (First-Party)
+        gtag('event', 'purchase', {
+            'send_to': 'G-F0S70EKR51',
+            'value': 150.00,
+            'currency': 'USD',
+            'transaction_id': tid
+        });
+
+        // 4. Send Purchase to Control Tag (Third-Party Standard)
+        gtag('event', 'purchase', {
+            'send_to': 'G-MQ6V2VWKL2',
+            'value': 150.00,
+            'currency': 'USD',
+            'transaction_id': tid
+        });
+
+        alert('Success!\nTransaction ID: ' + tid + '\nCheck the Network tab for routing differences.');
     });
 </script>
 
