@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTG Playground</title>
+    <title>Data Privacy Lab | Multi-Tag Test</title>
     
     <!-- 1. Google Fonts Import (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,14 +19,14 @@
 
       var randomUID = 'UID_' + Math.floor(Math.random() * 1000000);
 
-      // First-Party Configurations
-      gtag('config', 'G-QDK2WX7MJ1');
+      // --- First-Party Configurations ---
+      gtag('config', 'G-QDK2WX7MJ1', { 'debug_mode': true });
       gtag('config', 'AW-17153099825', {
           'user_id': randomUID,
           'allow_ad_personalization_signals': false
       });
-      gtag('config', 'G-F0S70EKR51');
-      gtag('config', 'DC-16848889');
+      gtag('config', 'G-F0S70EKR51', { 'debug_mode': true });
+      gtag('config', 'DC-16848889'); 
     </script>
 
     <!-- 3. STANDARD SNIPPET: Standard Third-Party Load -->
@@ -120,19 +120,20 @@
     <div class="container">
         <div class="playground-status">
             <div class="pulse"></div>
-            GTG Playground
+            Multi-ID Data Lab Active
         </div>
         
         <h1>Google Tag Gateway</h1>
-        <p>Testing First-Party purchase events across multiple Google properties.</p>
+        <p>Testing First-Party stream consolidation vs. Standard delivery.</p>
 
         <div class="config-box">
-            <h3>Active Purchase Targets</h3>
-            <div style="display: grid; gap: 10px; font-size: 0.85rem;">
+            <h3>Active Target Summary</h3>
+            <div style="display: grid; gap: 8px; font-size: 0.85rem;">
                 <div>• Primary GA4: <code>G-QDK2WX7MJ1</code> <span class="route-label first-party">1st Party</span></div>
                 <div>• Secondary GA4: <code>G-F0S70EKR51</code> <span class="route-label first-party">1st Party</span></div>
                 <div>• Google Ads: <code>AW-17153099825</code> <span class="route-label first-party">1st Party</span></div>
-                <div style="border-top: 1px solid #eee; padding-top: 10px; color: #94a3b8;">
+                <div>• Floodlight: <code>DC-16848889</code> <span class="route-label first-party">1st Party</span></div>
+                <div style="border-top: 1px solid #eee; padding-top: 8px; margin-top: 5px; color: #94a3b8;">
                     • Control (3P): <code>G-MQ6V2VWKL2</code> <span class="route-label third-party">Standard</span>
                 </div>
             </div>
@@ -150,43 +151,53 @@
     document.getElementById('year').innerText = new Date().getFullYear();
     document.getElementById('current-host').innerText = window.location.hostname;
 
-    // Manual Purchase Trigger for Demo
+    // --- CONSOLE DEBUG HELPER ---
+    window.checkConfig = function() {
+        console.log("%c--- GTG Dual-Route Check ---", "color: #005a9c; font-weight: bold; font-size: 14px;");
+        const tags = ['G-QDK2WX7MJ1', 'AW-17153099825', 'G-F0S70EKR51', 'DC-16848889', 'G-MQ6V2VWKL2'];
+        tags.forEach(id => {
+            gtag('get', id, 'user_id', (val) => {
+                console.log(`%c${id} %cuser_id: %c${val || 'Not Set'}`, "font-weight:bold", "color:black", "color:blue; font-weight:bold");
+            });
+        });
+        return "Checking all active tags...";
+    };
+
+    // Manual Purchase Trigger
     document.getElementById('purchase-trigger').addEventListener('click', function() {
         const tid = 'TID_' + Math.floor(Math.random() * 1000000);
         
-        // 1. Send Conversion to Google Ads (First-Party)
+        // 1. Google Ads Conversion (1st Party)
         gtag('event', 'conversion', {
             'send_to': 'AW-17153099825/8rVACOaXrKAcELGQnvM_',
-            'value': 1.0,
-            'currency': 'USD',
-            'transaction_id': tid
+            'value': 1.0, 'currency': 'USD', 'transaction_id': tid
         });
 
-        // 2. Send Purchase to Primary GA4 (First-Party)
+        // 2. Primary GA4 Purchase (1st Party)
         gtag('event', 'purchase', {
             'send_to': 'G-QDK2WX7MJ1',
-            'value': 150.00,
-            'currency': 'USD',
-            'transaction_id': tid
+            'value': 150.00, 'currency': 'USD', 'transaction_id': tid
         });
 
-        // 3. Send Purchase to Secondary GA4 (First-Party)
+        // 3. Secondary GA4 Purchase (1st Party)
         gtag('event', 'purchase', {
             'send_to': 'G-F0S70EKR51',
-            'value': 150.00,
-            'currency': 'USD',
-            'transaction_id': tid
+            'value': 150.00, 'currency': 'USD', 'transaction_id': tid
         });
 
-        // 4. Send Purchase to Control Tag (Third-Party Standard)
+        // 4. Floodlight/DC Purchase (1st Party)
+        gtag('event', 'purchase', {
+            'send_to': 'DC-16848889',
+            'value': 150.00, 'currency': 'USD', 'transaction_id': tid
+        });
+
+        // 5. Control Tag Purchase (3rd Party Standard)
         gtag('event', 'purchase', {
             'send_to': 'G-MQ6V2VWKL2',
-            'value': 150.00,
-            'currency': 'USD',
-            'transaction_id': tid
+            'value': 150.00, 'currency': 'USD', 'transaction_id': tid
         });
 
-        alert('Success!\nTransaction ID: ' + tid + '\nCheck the Network tab for routing differences.');
+        alert('Multi-ID Event fired!\nTransaction ID: ' + tid);
     });
 </script>
 
