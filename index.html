@@ -35,6 +35,39 @@
       gtag('config', 'G-MQ6V2VWKL2');
     </script>
 
+    <!-- 4. NEW CUSTOM SNIPPET: Server Container Test -->
+    <script>
+      (function (doc, tag) {
+        var scriptTag = doc.createElement(tag);
+        scriptTag.async = true;
+        // Using the requested footydebate URL with the custom path
+        scriptTag.src = 'https://tracking.footydebate.com/xzy6O6WJ6iAZ6h/';
+        var firstScriptTag = doc.getElementsByTagName(tag)[0];
+        if (firstScriptTag && firstScriptTag.parentNode) {
+            firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag);
+        } else {
+            doc.head.appendChild(scriptTag);
+        }
+      })(document, 'script');
+
+      window.dataLayer = window.dataLayer || [];
+      
+      // Prevent overwriting the gtag function if already defined by earlier snippets
+      if (typeof window.gtag !== 'function') {
+        window.gtag = function gtag() {
+            window.dataLayer.push(arguments);
+        };
+      }
+
+      gtag('config', 'AW-1023345244', {
+        // send_page_view: false,
+        // first_party_collection: true,
+        server_container_url: 'https://tracking.footydebate.com'
+      });
+
+      gtag('js', new Date());
+    </script>
+
     <style>
         :root {
             --primary: #005a9c;
@@ -95,6 +128,7 @@
         .route-label { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; margin-left: 8px; text-transform: uppercase;}
         .first-party { background: #dcfce7; color: #166534; }
         .third-party { background: #fee2e2; color: #991b1b; }
+        .server-container { background: #e0e7ff; color: #3730a3; }
 
         code { font-family: 'Courier New', monospace; color: var(--primary); font-weight: 600; }
 
@@ -133,6 +167,7 @@
                 <div>• Secondary GA4: <code>G-F0S70EKR51</code> <span class="route-label first-party">1st Party</span></div>
                 <div>• Google Ads: <code>AW-17153099825</code> <span class="route-label first-party">1st Party</span></div>
                 <div>• Floodlight: <code>DC-16848889</code> <span class="route-label first-party">1st Party</span></div>
+                <div>• Google Ads Test: <code>AW-1023345244</code> <span class="route-label server-container">Server Container</span></div>
                 <div style="border-top: 1px solid #eee; padding-top: 8px; margin-top: 5px; color: #94a3b8;">
                     • Control (3P): <code>G-MQ6V2VWKL2</code> <span class="route-label third-party">Standard</span>
                 </div>
@@ -154,7 +189,7 @@
     // --- CONSOLE DEBUG HELPER ---
     window.checkConfig = function() {
         console.log("%c--- GTG Dual-Route Check ---", "color: #005a9c; font-weight: bold; font-size: 14px;");
-        const tags = ['G-QDK2WX7MJ1', 'AW-17153099825', 'G-F0S70EKR51', 'DC-16848889', 'G-MQ6V2VWKL2'];
+        const tags = ['G-QDK2WX7MJ1', 'AW-17153099825', 'G-F0S70EKR51', 'DC-16848889', 'G-MQ6V2VWKL2', 'AW-1023345244'];
         tags.forEach(id => {
             gtag('get', id, 'user_id', (val) => {
                 console.log(`%c${id} %cuser_id: %c${val || 'Not Set'}`, "font-weight:bold", "color:black", "color:blue; font-weight:bold");
@@ -195,6 +230,15 @@
         gtag('event', 'purchase', {
             'send_to': 'G-MQ6V2VWKL2',
             'value': 150.00, 'currency': 'USD', 'transaction_id': tid
+        });
+
+        // 6. NEW Server Container Conversion (AW-1023345244)
+        gtag('event', 'conversion', {
+            'send_to': 'AW-1023345244/nU9gCODq3tMZENyE_OcD',
+            'value': 0.00,
+            'currency': 'EUR',
+            'product_id': 'PAP_194',
+            'product_value': 39.99
         });
 
         alert('Multi-ID Event fired!\nTransaction ID: ' + tid);
